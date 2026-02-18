@@ -1,0 +1,23 @@
+# Виртуальное окружение
+venv/
+env/
+.env
+
+# База данных
+*.sqlite3
+*.db
+
+# Файлы IDE (PyCharm, VSCode)
+.idea/
+.vscode/
+
+# Кеши Python
+__pycache__/
+*.pyc
+
+# Медиа и статика (если не хочешь хранить их в репе)
+/media/
+/staticfiles/
+
+# Локальные настройки
+local_settings.py

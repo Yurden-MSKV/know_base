@@ -1,0 +1,24 @@
+{% load static %}
+
+{% block articleblock %}
+    <div class="article_top">
+        <h2>{{ article.title }}</h2>
+        <button id="article-edit-{{ article.id }}"
+                class="article_edit"
+                hx-get="{% url 'article_edit' article.id %}"
+                hx-target="#article-container"
+                hx-swap="innerHTML">
+            <img src="{% static 'icons/pen-to-square-regular-full.svg' %}">
+            <p>Редактировать</p>
+        </button>
+        <button class="article_share">
+            <img src="{% static 'icons/share-from-square-regular-full.svg' %}">
+            <p>Скопировать ссылку</p>
+        </button>
+    </div>
+    <div class="article_content">
+        <div class="ck-content">
+            {{ article.content|safe }}
+        </div>
+    </div>
+{% endblock %}

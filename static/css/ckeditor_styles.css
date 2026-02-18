@@ -1,0 +1,94 @@
+.article_top {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    gap: 10px
+}
+
+.article_top h2 {
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+}
+
+.article_top button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: none;
+    border: 2px solid gray;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.article_top button img {
+    width: 20px;
+    height: fit-content;
+}
+
+.article_top button p {
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+}
+
+.ck-content {
+    /*width: 100%;*/
+    font-family: inherit !important;
+}
+/* 1. Контейнер изображения должен быть блочным, чтобы ширина применялась корректно */
+.ck-content .image.image_resized {
+    display: block; /* Переопределяем стандартный table */
+    box-sizing: border-box;
+    max-width: 100%; /* Чтобы не вылезало за пределы */
+}
+
+/* 2. Картинка внутри должна занимать всю ширину контейнера */
+.ck-content .image.image_resized img {
+    width: 100%;
+    height: auto; /* Сохраняем пропорции */
+}
+
+.ck-content .image-style-align-center {
+    border: 2px solid red;
+    width: 100%;
+}
+
+/* 3. Подпись, если есть, тоже делаем блочной */
+.ck-content .image.image_resized > figcaption {
+    display: block;
+}
+
+/* 1. Для изображений, выровненных по центру */
+.ck-content .image-style-block-align-center {
+    display: block; /* Делаем figure блочным */
+    margin-left: auto;
+    margin-right: auto;
+    clear: both; /* Запрещаем обтекание с обеих сторон */
+    text-align: center; /* Центрируем содержимое (картинку и подпись) */
+}
+
+/* 2. Для изображений, выровненных по левому краю с обтеканием */
+.ck-content .image-style-align-left {
+    float: left; /* Это заставляет текст обтекать справа */
+    margin-right: 1.5em; /* Отступ справа, чтобы текст не прилипал */
+    margin-bottom: 0.5em;
+    max-width: 50%; /* Чтобы изображение не занимало всю ширину */
+    clear: left; /* Запрещаем обтекание слева */
+}
+
+/* 3. Для изображений, выровненных по правому краю с обтеканием */
+.ck-content .image-style-align-right {
+    float: right; /* Это заставляет текст обтекать слева */
+    margin-left: 1.5em; /* Отступ слева */
+    margin-bottom: 0.5em;
+    max-width: 50%; /* Чтобы изображение не занимало всю ширину */
+    clear: right; /* Запрещаем обтекание справа */
+}
+
+/* 4. Важное дополнение: чтобы изображения с обтеканием не вылезали за пределы контейнера */
+.ck-content:after {
+    content: "";
+    display: table;
+    clear: both;
+}

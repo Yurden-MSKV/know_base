@@ -1,0 +1,46 @@
+/* Regular */
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../fonts/UbuntuSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+/* Italic */
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../fonts/UbuntuSans-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+/* Bold */
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../fonts/UbuntuSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+/* Bold Italic */
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../fonts/UbuntuSans-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+/* Medium */
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../fonts/UbuntuSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+/* Medium Italic */
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../fonts/UbuntuSans-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+button {
+    font-family: inherit;
+}

@@ -1,0 +1,18 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+</head>
+<body>
+    <link rel="stylesheet" href="{% static 'article_section/css/home_page.css' %}">
+    <div class="main_container">
+        {% for article in articles %}
+            <h2>{{ article.title }}</h2>
+            <p>{{ article.get_short_content_safe }}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

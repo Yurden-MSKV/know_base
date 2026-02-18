@@ -1,0 +1,15 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ article.title }}</title>
+</head>
+<body>
+    <link rel=stylesheet href="{% static 'article_section/css/article_page.css' %}">
+    <div class="ck-content">
+        {{ article.content|safe }}
+    </div>
+</body>
+</html>
