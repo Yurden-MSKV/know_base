@@ -4,6 +4,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>База знаний</title>
     <style>
         /* Скрываем textarea до инициализации CKEditor */
@@ -48,7 +49,8 @@
     <link rel="stylesheet" href="{% static 'article_section/css/main_page.css' %}">
     <link rel="stylesheet" href="{% static 'css/ckeditor_styles.css' %}">
     <link rel="stylesheet" href="{% static 'django_ckeditor_5/dist/styles.css' %}">
-    <script src="{% static 'django_ckeditor_5/dist/bundle.js' %}"></script>
+{#    <script src="{% static 'django_ckeditor_5/dist/bundle.js' %}"></script>#}
+    <script src="{% static 'js/my_ckeditor_bundle.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"></script>
     <main>
         <aside class="side_panel">
@@ -75,6 +77,11 @@
                     <div class="section_block">
                         <div class="section_name">
                             <h3>{{ section.name }}</h3>
+                            <button hx-get="{% url 'article_create' section.id %}"
+                                    hx-target="#article-container"
+                                    hx-swap="innerHTML">
+                                <img src="{% static 'icons/square-plus-regular-full.svg' %}">
+                            </button>
                         </div>
                         <div class="articles_list">
                             {% for article in section.articles.all %}
@@ -108,5 +115,63 @@
             history.replaceState(null, '', '/');
         </script>
     {% endif %}
+    <script>
+        window.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=' || e.key === '0')) {
+                e.preventDefault();
+            }
+        });
+        window.addEventListener('wheel', function(e) {
+            if (e.ctrlKey) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+    <script>
+        // Жесткое подавление ошибок CKEditor
+        (function() {
+            // Полностью переопределяем console.error
+            var originalError = window.console.error;
+
+            window.console.error = function() {
+                var args = Array.prototype.slice.call(arguments);
+                var errorText = args.join(' ');
+
+                // Игнорируем ошибки CKEditor
+                if (errorText.includes('CKEditorError') ||
+                    errorText.includes('ui-template-wrong-syntax') ||
+                    errorText.includes('ckeditor') ||
+                    errorText.includes('editor') ||
+                    errorText.includes('CKEDITOR')) {
+                    return; // Молча игнорируем
+                }
+
+                // Остальные ошибки выводим
+                return originalError.apply(this, arguments);
+            };
+
+            // Подавляем unhandledrejection для CKEditor
+            window.addEventListener('unhandledrejection', function(event) {
+                if (event.reason &&
+                    (event.reason.toString().toLowerCase().includes('ckeditor') ||
+                     event.reason.toString().toLowerCase().includes('editor'))) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return false;
+                }
+            }, true);
+
+            // Подавляем обычные ошибки CKEditor
+            window.addEventListener('error', function(event) {
+                if (event.message &&
+                    (event.message.toLowerCase().includes('ckeditor') ||
+                     event.message.toLowerCase().includes('editor'))) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return false;
+                }
+            }, true);
+        })();
+    </script>
 </body>
 </html>

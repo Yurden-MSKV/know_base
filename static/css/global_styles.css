@@ -1,0 +1,7 @@
+body {
+    --border-radius: 10px;
+    --element-border-radius: 5px;
+    --block-background: rgba(170, 170, 170, 0.4);
+    --element-background: rgba(170, 170, 170, 0.6);
+    --border-color: #666666
+}

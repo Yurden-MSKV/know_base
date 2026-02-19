@@ -11,14 +11,27 @@
             <img src="{% static 'icons/pen-to-square-regular-full.svg' %}">
             <p>Редактировать</p>
         </button>
-        <button class="article_share">
+        <button class="article_share" id="article-share">
             <img src="{% static 'icons/share-from-square-regular-full.svg' %}">
             <p>Скопировать ссылку</p>
         </button>
+        <p id="article-link" style="display: none">https://192.168.17.198:8000/article/{{ article.id }}/</p>
     </div>
     <div class="article_content">
         <div class="ck-content">
             {{ article.content|safe }}
         </div>
     </div>
+    <script>
+        document.getElementById('article-share').onclick = () => {
+            // Делайте проверку:
+            const linkElement = document.getElementById('article-link').innerText;
+            if (linkElement) {
+                navigator.clipboard.writeText(linkElement)
+                console.log('Скопирована ссылка:', linkElement)
+            } else {
+                console.error('Ссылки нет.')
+            }
+        }
+    </script>
 {% endblock %}

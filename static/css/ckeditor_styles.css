@@ -1,3 +1,6 @@
+@import url('static/css/text.css');
+@import url('static/css/global_styles.css');
+
 .article_top {
     display: flex;
     align-items: center;
@@ -16,8 +19,8 @@
     flex-direction: row;
     align-items: center;
     background: none;
-    border: 2px solid gray;
-    border-radius: 10px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--element-border-radius);
     font-weight: bold;
 }
 
@@ -91,4 +94,8 @@
     content: "";
     display: table;
     clear: both;
+}
+
+.ck-reset_all, .ck-button__label, .ck-tooltip__text {
+    font-family: Ubuntu !important;
 }

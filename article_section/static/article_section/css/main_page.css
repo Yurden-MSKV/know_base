@@ -1,4 +1,5 @@
 @import url('../../../../static/css/text.css');
+@import url('../../../../static/css/global_styles.css');
 
 html, body {
     width: 100vw;
@@ -25,8 +26,9 @@ main {
     height: 100%;
     width: 20%;
     box-sizing: border-box;
-    border: 2px solid blue;
-    border-radius: 15px;
+    /*border: 2px solid blue;*/
+    border-radius: var(--border-radius);
+    background: var(--block-background);
     padding: 10px;
     gap: 10px
 }
@@ -35,7 +37,7 @@ main {
     width: 100%;
     height: 5%;
     /*border: 2px solid limegreen;*/
-    border-radius: 15px;
+    border-radius: var(--border-radius);
     box-sizing: border-box;
 }
 
@@ -44,7 +46,7 @@ main {
     flex-direction: row;
     padding: 10px;
     gap: 5px;
-    border: 2px solid limegreen;
+    border: 2px solid var(--border-color);
 }
 
 .side_home {
@@ -81,10 +83,15 @@ main {
     font-family: inherit;
     font-weight: bold;
     color: black;
+    font-size: 13.5px;
 }
 
 .side_search:focus-visible {
     outline: none;
+}
+
+.side_search::placeholder {
+    color: #000000
 }
 
 .side_content, .article_content {
@@ -92,14 +99,21 @@ main {
     flex-direction: column;
     width: 100%;
     height: 95%;
-    border: 2px solid purple;
-    border-radius: 15px;
+    /*border: 2px solid purple;*/
+    border-radius: var(--border-radius);
     box-sizing: border-box;
     gap: 15px;
 }
 
 .side_content {
     padding: 10px;
+}
+
+.no-results p {
+    margin: 0;
+    padding: 0;
+    font-size: medium;
+    font-style: italic;
 }
 
 .article_content {
@@ -109,11 +123,13 @@ main {
 .section_block {
     display: flex;
     flex-direction: column;
-    gap: 5px
+    gap: 10px
 }
 
 .section_name {
-    width: fit-content;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .section_name h3 {
@@ -121,17 +137,27 @@ main {
     margin: 0;
 }
 
+.section_name button {
+    background: none;
+    border: none;
+}
+
+.section_name button img {
+    width: 25px;
+}
+
 .articles_list {
     display: flex;
     flex-direction: column;
-    gap: 10px
+    gap: 15px
 }
 
 .article_item {
     width: fit-content;
-    margin: 0 10px 0 20px;
-    border: 2px solid red;
-    border-radius: 10px;
+    /*margin: 0 10px 0 20px;*/
+    /*border: 2px solid red;*/
+    border-radius: var(--element-border-radius);
+    background: var(--element-background);
 }
 
 .article_item button {
@@ -145,6 +171,7 @@ main {
 .article_item p {
     margin: 0;
     padding: 5px 10px;
+    font-size: 14px;
 }
 
 .article_container {
@@ -153,8 +180,45 @@ main {
     height: 100%;
     width: 80%;
     box-sizing: border-box;
-    border: 2px solid green;
-    border-radius: 15px;
+    /*border: 2px solid green;*/
+    background: var(--block-background);
+    border-radius: var(--border-radius);
     padding: 10px;
     gap: 10px
+}
+
+.article_edit_content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+#id_title {
+    font-size: 15.5px;
+    font-family: Ubuntu !important;
+    padding-left: 5px;
+    width: 50%;
+}
+
+.form_field label {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.article_send_block {
+    display: flex;
+    gap: 10px;
+    width: fit-content;
+    margin-top: 10px;
+}
+
+.article_send_block button, .article_send_block a {
+    background: none;
+    border-radius: var(--element-border-radius);
+    padding: 3px 7px;
+    border: 2px solid var(--border-color);
+    font: bold 14px 'Ubuntu';
+    text-decoration: none;
+    color: #000000;
+    cursor: default;
 }

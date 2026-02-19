@@ -5,18 +5,14 @@
     {{ form.media }}
 {% endif %}
 
-<form id="article-form-{{ article.id }}"
+<form id="article-form-{% if is_creating %}new-{{ section.id }}{% else %}{{ article.id }}{% endif %}"
       class="article_form"
       method="POST"
-      hx-post="{% url 'article_edit' article.id %}"
+      hx-post="{% if is_creating %}{% url 'article_create_save' section.id %}{% else %}{% url 'article_edit' article.id %}{% endif %}"
       hx-target="#article-container"
       hx-swap="innerHTML">
 
     {% csrf_token %}
-
-{#    <div class="article_top">#}
-{#        <h2>Редактирование: {{ article.title }}</h2>#}
-{#    </div>#}
 
     <div class="article_edit_content">
         <div class="form_field">
@@ -30,95 +26,34 @@
         </div>
 
         <div class="article_send_block">
-            <button type="submit" class="article_send">Сохранить</button>
-            <button type="button"
-                    class="article_cancel"
-                    hx-get="{% url 'article_page' article.id %}"
-                    hx-target="#article-container"
-                    hx-swap="innerHTML">
-                Отмена
+            <button type="submit" class="article_send">
+                {% if is_creating %}Создать{% else %}Сохранить{% endif %}
             </button>
+            <a href={% url 'main_page' %}>
+                Отмена
+            </a>
         </div>
     </div>
 </form>
 
-{# При HTMX-запросе — пересоздаем редактор #}
-{% if request.headers.HX_Request %}
-    <script>
-        (function() {
-            // Даем HTMX время вставить контент
-            setTimeout(function() {
-                // Находим все поля редактора
-                const editorElements = document.querySelectorAll('.django_ckeditor_5');
-
-                if (editorElements.length && window.ClassicEditor) {
-                    editorElements.forEach(element => {
-                        // Уничтожаем старый экземпляр, если есть
-                        if (element.ckeditorInstance) {
-                            element.ckeditorInstance.destroy()
-                                .then(() => {
-                                    // Создаем новый
-                                    return window.ClassicEditor.create(element, window.CKEDITOR_5_CONFIG);
-                                })
-                                .then(editor => {
-                                    element.ckeditorInstance = editor;
-                                })
-                                .catch(error => {
-                                    console.error('Ошибка при пересоздании редактора:', error);
-                                });
-                        } else {
-                            // Просто создаем новый
-                            window.ClassicEditor.create(element, window.CKEDITOR_5_CONFIG)
-                                .then(editor => {
-                                    element.ckeditorInstance = editor;
-                                })
-                                .catch(error => {
-                                    console.error('Ошибка при создании редактора:', error);
-                                });
-                        }
-                    });
-                }
-            }, 150);
-        })();
-    </script>
-{% endif %}
-
 <script>
     (function() {
-        const form = document.getElementById('article-form-{{ article.id }}');
+        const form = document.getElementById('article-form-{% if is_creating %}new-{{ section.id }}{% else %}{{ article.id }}{% endif %}');
         if (!form) return;
 
-        // Используем событие htmx:configRequest — оно происходит ПОСЛЕ сбора данных,
-        // но ДО отправки. Здесь мы можем изменить параметры запроса.
         form.addEventListener('htmx:configRequest', function(evt) {
             console.log('HTMX configRequest');
 
-            // Находим textarea
             const textarea = document.querySelector('.django_ckeditor_5');
             if (!textarea) return;
 
-            // Обновляем textarea из CKEditor
             if (window.editors && window.editors[textarea.id]) {
                 window.editors[textarea.id].updateSourceElement();
             } else if (textarea.ckeditorInstance) {
                 textarea.ckeditorInstance.updateSourceElement();
             }
 
-            console.log('Обновленное значение:', textarea.value);
-
-            // ПРИНУДИТЕЛЬНО заменяем content в параметрах запроса
             evt.detail.parameters['content'] = textarea.value;
-
-            console.log('Параметры запроса:', evt.detail.parameters);
-        });
-
-        // Для надежности — дублируем через beforeRequest
-        form.addEventListener('htmx:beforeRequest', function(evt) {
-            console.log('beforeRequest — финальная проверка');
-            const textarea = document.querySelector('.django_ckeditor_5');
-            if (textarea) {
-                console.log('Финальное значение:', textarea.value);
-            }
         });
     })();
 </script>
